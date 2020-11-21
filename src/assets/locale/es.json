@@ -1,1 +1,57 @@
-{}
+{
+	"banner": {
+		"character": {
+			"permanent": {
+				"description": "Invocación del trotamundos",
+				"title": "Personaje - Permanente"
+			},
+			"temporal": {
+				"description": "El adiós de Snezhnaya",
+				"title": "Personaje - Temporal"
+			}
+		},
+		"pitty": {
+			"countdown": "{{ rarity }}* como mucho en {{ countdown }} deseos",
+			"next-asured": "El siguiente deseo debería ser de {{ rarity }}*"
+		},
+		"weapon": {
+			"temporal": {
+				"description": "Encarnación divina",
+				"title": "Arma - Temporal"
+			}
+		},
+		"wishes": {
+			"total": "Total de deseos: {{ total }}"
+		}
+	},
+	"common": {
+		"actions": {
+			"acept": "Aceptar",
+			"edit": "Editar"
+		}
+	},
+	"game": {
+		"invocable": {
+			"rarity": {
+				"common": "3*",
+				"epic": "5*",
+				"rare": "4*"
+			}
+		},
+		"wishes": {
+			"common": "Deseos de 3*",
+			"epic": "Deseos de 5*",
+			"rare": "Deseos de 4*"
+		}
+	},
+	"item": {
+		"weapon": {
+			"sword": "Espada"
+		}
+	},
+	"system": {
+		"update": {
+			"new-version-available": "Nueva version {{ version }} disponible. ¿Actualizar?"
+		}
+	}
+}

@@ -1,1 +1,57 @@
-{}
+{
+	"banner": {
+		"character": {
+			"permanent": {
+				"description": "Wanderlust Invocation",
+				"title": "Character - Permanent"
+			},
+			"temporal": {
+				"description": "Farewell of Snezhnaya",
+				"title": "Character - Temporal"
+			}
+		},
+		"pitty": {
+			"countdown": "{{ rarity }}* in at least {{ countdown }} wishes",
+			"next-asured": "The next wish should be a {{ rarity }}*"
+		},
+		"weapon": {
+			"temporal": {
+				"description": "Epitome Invocation",
+				"title": "Weapon - Temporal"
+			}
+		},
+		"wishes": {
+			"total": "Total wishes: {{ total }}"
+		}
+	},
+	"common": {
+		"actions": {
+			"acept": "Accept",
+			"edit": "Edit"
+		}
+	},
+	"game": {
+		"invocable": {
+			"rarity": {
+				"common": "3*",
+				"epic": "5*",
+				"rare": "4*"
+			}
+		},
+		"wishes": {
+			"common": "3* Wishes",
+			"epic": "5* Wishes",
+			"rare": "4* Wishes"
+		}
+	},
+	"item": {
+		"weapon": {
+			"sword": "Sword"
+		}
+	},
+	"system": {
+		"update": {
+			"new-version-available": "New version {{ version }} available. Reload?"
+		}
+	}
+}

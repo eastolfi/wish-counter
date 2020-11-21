@@ -1,35 +1,47 @@
-<div class="container-fluid p-3">
-  <div class="row">
-    <div class="col-4">
-      <button mat-raised-button (click)="addWish(3)" [disabled]="wishesToRare === 1 || wishesToEpic === 1">3*</button>
-    </div>
-    <div class="col-4">
-      <button mat-raised-button (click)="addWish(4)" [disabled]="wishesToEpic === 1">4*</button>
-    </div>
-    <div class="col-4">
-      <button mat-raised-button (click)="addWish(5)">5*</button>
-    </div>
-  </div>
+<div class="p-3">
+    <mat-accordion [multi]="true">
+        <mat-expansion-panel [expanded]="banner.type === BANNER_TYPES.CHARACTER_TEMPORAL" *ngFor="let banner of banners">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{ banner.title | translate }}
+                </mat-panel-title>
 
-  <div class="row mt-5">
-    <div class="col-12 text-center">
-      <p *ngIf="wishesToRare > 1">
-        4* como mucho en {{ wishesToRare }} deseos
-      </p>
-      <p *ngIf="wishesToRare === 1">
-        el siguiente deseo debería ser de 4*
-      </p>
-    </div>
-  </div>
+                <mat-panel-description>
+                    {{ banner.description | translate }}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
 
-  <div class="row">
-    <div class="col-12 text-center">
-      <p *ngIf="wishesToEpic > 1">
-        5* como mucho en {{ wishesToEpic }} deseos
-      </p>
-      <p *ngIf="wishesToEpic === 1">
-        el siguiente deseo debería ser de 5*
-      </p>
-    </div>
-  </div>
+            <div class="">
+                <!-- Edit wishes -->
+                <div class="mb-2">
+                    <span>{{ 'banner.wishes.total' | translate:{ total: banner.totalWishes } }}</span>
+                    <button mat-icon-button color="warn" aria-label="{{ 'common.actions.edit' | translate }}" (click)="openWishEditDialog(banner)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </div>
+
+                <!-- Counting buttons -->
+                <div class="d-flex justify-content-around mb-3">
+                    <div class="">
+                        <wc-card-button (click)="addWish(banner, RARITY.COMMON)" [disabled]="banner.wishesToRare === 1 || banner.wishesToEpic === 1">
+                            {{ 'game.invocable.rarity.common' | translate }}
+                        </wc-card-button>
+                    </div>
+                    <div class="">
+                        <wc-card-button (click)="addWish(banner, RARITY.RARE)" [disabled]="banner.wishesToEpic === 1">
+                            {{ 'game.invocable.rarity.rare' | translate }}
+                        </wc-card-button>
+                    </div>
+                    <div class="">
+                        <wc-card-button (click)="addWish(banner, RARITY.EPIC)">
+                            {{ 'game.invocable.rarity.epic' | translate }}
+                        </wc-card-button>
+                    </div>
+                </div>
+
+                <!-- Counting details -->
+                <wc-banner-counter [banner]="banner"></wc-banner-counter>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
 </div>

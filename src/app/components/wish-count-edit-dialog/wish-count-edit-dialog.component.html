@@ -1,0 +1,18 @@
+<div>
+    <mat-form-field>
+        <mat-label>{{ 'game.wishes.common' | translate }}</mat-label>
+        <input matInput type="number" placeholder="0" min="0" [value]="data.totalWishes" (change)="updateWish(RARITY.COMMON, $event)" />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>{{ 'game.wishes.rare' | translate }}</mat-label>
+        <input matInput type="number" placeholder="0" min="0" max="9" [value]="data.wishesToRare" (change)="updateWish(RARITY.RARE, $event)" />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>{{ 'game.wishes.epic' | translate }}</mat-label>
+        <input matInput type="number" placeholder="0" min="0" max="89" [value]="data.wishesToEpic" (change)="updateWish(RARITY.EPIC, $event)" />
+    </mat-form-field>
+
+    <button mat-button color="accent" [mat-dialog-close]="data">{{ 'common.actions.acept' | translate }}</button>
+</div>
