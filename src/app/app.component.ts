@@ -7,12 +7,12 @@ import { marker as extract } from '@biesbjerg/ngx-translate-extract-marker';
 import { WishCountEditDialogComponent, WishCountEditDialogData } from './components/wish-count-edit-dialog/wish-count-edit-dialog.component';
 import { BannerFactory } from './factories/banner.factory';
 import { Banner, BannerType, Rarity } from './models/banner';
+import { BannerService } from './services/banner.service';
 
 extract([
     'system.update.new-version-available',
 ])
 
-const WISHES_STORAGE_KEY = 'wishes';
 
 @Component({
     selector: 'wc-root',
@@ -31,7 +31,8 @@ export class AppComponent implements OnInit {
     constructor(
         public readonly dialog: MatDialog,
         private readonly updates: SwUpdate,
-        private readonly translate: TranslateService
+        private readonly translate: TranslateService,
+        private readonly bannerService: BannerService,
     ) {
         this.updates.available.subscribe(async (event: UpdateAvailableEvent) => {
             if (confirm(await this.translate.get('system.update.new-version-available', { version: event.current.appData['version'] }).toPromise())) {
@@ -107,16 +108,11 @@ export class AppComponent implements OnInit {
     }
 
     private saveBanners(): void {
-        localStorage.setItem(WISHES_STORAGE_KEY, JSON.stringify(this.banners.map(({ type, totalWishes, wishesToRare, wishesToEpic }: Banner) => {
-            return {
-                type, totalWishes, wishesToRare, wishesToEpic
-            } as Partial<Banner>
-        })));
+        this.bannerService.saveUserBanners(this.banners);
     }
 
     private loadBanners(): void {
-        const banners = JSON.parse(localStorage.getItem(WISHES_STORAGE_KEY));
-
+        const banners = this.bannerService.searchUserBanners();
         if (banners) {
             banners.forEach((savedBanner: Partial<Banner>) => {
                 this.banners.forEach((banner: Banner) => {
