@@ -15,6 +15,8 @@ export enum BannerType {
 }
 
 export interface Banner {
+    id?: string;
+    userId?: string;
     type: BannerType;
     title: string;
     description: string;

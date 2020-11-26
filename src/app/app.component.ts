@@ -8,11 +8,17 @@ import { WishCountEditDialogComponent, WishCountEditDialogData } from './compone
 import { BannerFactory } from './factories/banner.factory';
 import { Banner, BannerType, Rarity } from './models/banner';
 import { BannerService } from './services/banner.service';
+import { AuthService, User } from './services/auth.service';
+import { MigrationService } from './services/migration.service';
+import { filter } from 'rxjs/operators';
 
 extract([
     'system.update.new-version-available',
 ])
 
+function isNotNull<T>(value: T): value is NonNullable<T> {
+    return value != null;
+}
 
 @Component({
     selector: 'wc-root',
@@ -33,20 +39,32 @@ export class AppComponent implements OnInit {
         private readonly updates: SwUpdate,
         private readonly translate: TranslateService,
         private readonly bannerService: BannerService,
+        private readonly authService: AuthService,
+        private readonly migrationService: MigrationService,
     ) {
         this.updates.available.subscribe(async (event: UpdateAvailableEvent) => {
-            if (confirm(await this.translate.get('system.update.new-version-available', { version: event.current.appData['version'] }).toPromise())) {
-                window.location.reload();
+            if (confirm(await this.translate.get('system.update.new-version-available', { version: event.available.appData['version'] }).toPromise())) {
+                this.migrationService.migrate(event.current.appData['version'], event.available.appData['version'])
+                .then(/* do nothing ? */)
+                .catch(/* flag as failed migration */)
+                .finally(() => window.location.reload());
             }
         });
         // updates.activated.subscribe(event => {
         //     alert(`App updated. Old version was ${event.previous}. New version is ${event.current}`)
         // });
+        // this.wishService.searchUserBanners('12345').subscribe((banner: Banner) => {
+        //     console.log(banner);
+        // });
     }
 
     ngOnInit(): void {
-        this.migrateWishes();
-        this.loadBanners();
+        this.authService.currentUser
+        .pipe(filter(isNotNull))
+        .subscribe((_user: User) => {
+            this.loadBanners();
+        })
+        this.authService.ensureUser();
     }
 
     public openWishEditDialog(banner: Banner): void {
@@ -65,7 +83,7 @@ export class AppComponent implements OnInit {
                 banner.totalWishes = result.totalWishes;
                 banner.wishesToRare = result.wishesToRare;
                 banner.wishesToEpic = result.wishesToEpic;
-                this.saveBanners();
+                this.saveBanner(banner);
             }
         })
     }
@@ -81,7 +99,7 @@ export class AppComponent implements OnInit {
             banner.totalWishes = value;
         }
 
-        this.saveBanners();
+        this.saveBanner(banner);
     }
 
     public addWish(banner: Banner, rarity: Rarity): void {
@@ -104,29 +122,27 @@ export class AppComponent implements OnInit {
             banner.wishesToRare--;
         }
 
-        this.saveBanners();
+        this.saveBanner(banner);
     }
 
-    private saveBanners(): void {
-        this.bannerService.saveUserBanners(this.banners);
+    private saveBanner(banner: Banner): void {
+        this.bannerService.saveUserBanner(banner);
     }
 
     private loadBanners(): void {
-        const banners = this.bannerService.searchUserBanners();
-        if (banners) {
-            banners.forEach((savedBanner: Partial<Banner>) => {
-                this.banners.forEach((banner: Banner) => {
-                    if (banner.type === savedBanner.type) {
-                        banner.totalWishes = savedBanner.totalWishes;
-                        banner.wishesToRare = savedBanner.wishesToRare;
-                        banner.wishesToEpic = savedBanner.wishesToEpic;
-                    }
+        this.bannerService.searchUserBanners().subscribe((banners: Banner[]) => {
+            if (banners) {
+                banners.forEach((savedBanner: Partial<Banner>) => {
+                    this.banners.forEach((banner: Banner) => {
+                        if (banner.type === savedBanner.type) {
+                            banner.id = savedBanner.id;
+                            banner.totalWishes = savedBanner.totalWishes;
+                            banner.wishesToRare = savedBanner.wishesToRare;
+                            banner.wishesToEpic = savedBanner.wishesToEpic;
+                        }
+                    })
                 })
-            })
-        }
-    }
-
-    private migrateWishes(): void {
-        // To be implemented
+            }
+        });
     }
 }

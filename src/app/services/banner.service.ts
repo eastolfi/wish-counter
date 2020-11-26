@@ -1,24 +1,83 @@
 import { Injectable } from '@angular/core';
+import { AngularFirestore, CollectionReference, DocumentChangeAction, DocumentReference } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Banner } from '../models/banner';
-
-const WISHES_STORAGE_KEY = 'wishes';
+import { AuthService } from './auth.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class BannerService {
+    private readonly USER_BANNERS_COLLECTION = 'user-banners';
 
-    constructor() { }
+    constructor(
+        private readonly firestore: AngularFirestore,
+        private readonly authService: AuthService,
+    ) { }
 
-    public searchUserBanners(): Partial<Banner>[] {
-        return JSON.parse(localStorage.getItem(WISHES_STORAGE_KEY));
+    public searchUserBanners(): Observable<Banner[]> {
+        const user = this.authService.currentUser.value;
+
+        return this.firestore.collection(this.USER_BANNERS_COLLECTION,
+        (ref: CollectionReference) => ref.where('userId', '==', user.id))
+            .snapshotChanges()
+            .pipe(
+                map((bannerActions: DocumentChangeAction<Banner>[]) => {
+                    return bannerActions.map(({ payload }: DocumentChangeAction<Banner>) => {
+                        return {
+                            id: payload.doc.id,
+                            ...payload.doc.data()
+                        } as Banner;
+                    });
+                })
+            );
     }
 
-    public saveUserBanners(banners: Banner[]) {
-        localStorage.setItem(WISHES_STORAGE_KEY, JSON.stringify(banners.map(({ type, totalWishes, wishesToRare, wishesToEpic }: Banner) => {
-            return {
-                type, totalWishes, wishesToRare, wishesToEpic
-            } as Partial<Banner>
-        })));
+    public saveUserBanner(banner: Banner): Promise<void> {
+        const user = this.authService.currentUser.value;
+
+        return new Promise((resolve, reject) => {
+            if (banner.id) {
+                // Watch out for saving problems
+                this.firestore.collection(this.USER_BANNERS_COLLECTION)
+                    .doc(banner.id)
+                    .set({
+                        totalWishes: banner.totalWishes,
+                        wishesToRare: banner.wishesToRare,
+                        wishesToEpic: banner.wishesToEpic
+                    }, { merge: true })
+                    .then(resolve)
+                    .catch(reject);
+            } else {
+                this.firestore.collection(this.USER_BANNERS_COLLECTION)
+                    .add({
+                        userId: user.id,
+                        ...banner
+                    })
+                    .then((result: DocumentReference<Banner>) => {
+                        banner.userId = user.id;
+                        banner.id = result.id;
+                        resolve();
+                    })
+                    .catch(reject);
+            }
+        });
+
+
+        // this.firestore.collection(this.USER_BANNERS_COLLECTION,
+        // (ref: CollectionReference) => ref
+        //     .where('user-id', '==', userId)
+        //     .where('type', '==', banner.type))
+        // .snapshotChanges().subscribe((asd: DocumentChangeAction<Banner>[]) => {
+        //     asd.forEach(({ payload }: DocumentChangeAction<Banner>) => {
+        //         this.firestore.doc(`${this.USER_BANNERS_COLLECTION}/${payload.doc.id}`)
+        //         .set({
+        //             totalWishes: banner.totalWishes,
+        //             wishesToRare: banner.wishesToRare,
+        //             wishesToEpic: banner.wishesToEpic
+        //         }, { merge: true });
+        //     })
+        // })
     }
 }
