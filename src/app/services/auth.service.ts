@@ -34,6 +34,11 @@ export class AuthService {
         });
     }
 
+    // improve with local storage
+    public isUserValid(): boolean {
+        return this.currentUser.value != null;
+    }
+
     public signUp(username: string, password: string): void {
         this.afAuth.createUserWithEmailAndPassword(username, password)
         .then(console.log)
