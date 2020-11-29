@@ -1,0 +1,87 @@
+@mixin button-reset {
+    user-select: none;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    color: inherit;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.main-container {
+    --ngx-bottom-nav-background-color: transparent;
+
+    display: block;
+    width: 100%;
+}
+
+mat-toolbar {
+    display: flex;
+    justify-content: center;
+    height: 56px;
+    padding: 0;
+    background: var(--ngx-bottom-nav-background-color);
+    overflow: hidden;
+}
+
+mat-toolbar ngx-bottom-nav-button {
+    height: 100%;
+    flex: 1 1 auto;
+}
+
+//
+
+
+
+.button-nav-button {
+    @include button-reset;
+
+    --ngx-bottom-nav-button-color: rgb(100, 100, 100);
+    --ngx-bottom-nav-button-active-color: #000;
+
+    min-width: 80px;
+    max-width: 168px;
+
+    background: transparent;
+    text-decoration: none;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 8px 12px 12px 12px;
+    height: calc(100% - 20px);
+}
+
+.button-nav-button:not(.active) {
+    // color: var(--ngx-bottom-nav-button-color);
+    color: lightgray;
+}
+
+.button-nav-button.active {
+    --ngx-bottom-nav-button-color: var(--ngx-bottom-nav-button-active-color);
+}
+
+.button-nav-button.active:not(.label-hidden) {
+    padding-top: 7px;
+}
+
+.label {
+    font-size: 12px;
+    line-height: 12px;
+}
+
+.button-nav-button.active .label {
+    font-size: 13px;
+    line-height: 13px;
+}
+
+.button-nav-button.label-hidden:not(.active) {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    height: calc(100% - 32px);
+}
+
+.button-nav-button.label-hidden:not(.active) .label {
+    display: none;
+}

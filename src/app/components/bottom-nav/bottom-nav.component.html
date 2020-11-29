@@ -1,0 +1,26 @@
+<div class="main-container">
+    <mat-toolbar class="toolbar-container" [color]="color" *ngIf="items?.length">
+            <!-- wc-bottom-nav -->
+            <!-- [label]="i.label" -->
+            <!-- [hideLabel]="hideLabels" -->
+        <button
+            *ngFor="let i of items"
+            class="button-nav-button"
+            [class.label-hidden]="items?.length > 4"
+            [routerLink]="i.routerLink"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: i.exact }"
+        >
+            <ng-container>
+                <!-- <ng-content select="[wcBottomNavIcon]"></ng-content> -->
+                <mat-icon *ngIf="!i.svgIcon">{{ i.icon }}</mat-icon>
+                <mat-icon *ngIf="i.svgIcon" svgIcon="{{ i.icon }}"></mat-icon>
+
+                <div class="label">{{ i.label }}</div>
+            </ng-container>
+            <!-- <mat-icon wcBottomNavIcon>{{ i.icon }}</mat-icon> -->
+        </button>
+
+        <!-- <ng-content select="[ngx-bottom-nav]"></ng-content> -->
+    </mat-toolbar>
+</div>

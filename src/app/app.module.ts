@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -10,10 +10,12 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { MatIconRegistry } from '@angular/material/icon';
 
 import { environment } from '../environments/environment';
 
 import { MaterialModule } from './components/material/material.module';
+import { BottomNavModule } from './components/bottom-nav/bottom-nav.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,8 +34,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         HttpClientModule,
         ReactiveFormsModule,
         FlexLayoutModule,
-        AppRoutingModule,
-        CoreModule,
+        BottomNavModule,
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
         TranslateModule.forRoot({
             defaultLanguage: 'es',
             loader: {
@@ -45,9 +47,23 @@ export function HttpLoaderFactory(http: HttpClient) {
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAuthModule,
         AngularFirestoreModule,
-        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+        AppRoutingModule,
+        CoreModule,
+        MaterialModule,
     ],
-    providers: [],
+    providers: [
+        MatIconRegistry
+    ],
     bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+    constructor(
+        private readonly domSanitizer: DomSanitizer,
+        private readonly iconRegistry: MatIconRegistry,
+    ) {
+        this.iconRegistry.addSvgIcon(
+            'wc-wish',
+            this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/icons/wish.svg')
+        );
+    }
+}

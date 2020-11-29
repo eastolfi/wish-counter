@@ -9,6 +9,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 const MATERIAL_COMPONENTS = [
     MatButtonModule,
@@ -19,6 +20,7 @@ const MATERIAL_COMPONENTS = [
     MatDialogModule,
     MatInputModule,
     MatExpansionModule,
+    MatToolbarModule,
 ]
 
 @NgModule({
