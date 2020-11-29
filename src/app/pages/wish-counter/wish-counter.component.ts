@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { marker as extract } from '@biesbjerg/ngx-translate-extract-marker';
 import { filter } from 'rxjs/operators';
 
+import { BottomNavService } from '../../components/bottom-nav/bottom-nav.service';
 import { WishCountEditDialogComponent, WishCountEditDialogData } from '../../components/wish-count-edit-dialog/wish-count-edit-dialog.component';
 import { BannerFactory } from '../../factories/banner.factory';
 import { Banner, BannerType, Rarity } from '../../models/banner';
@@ -38,9 +39,15 @@ export class WishCounterComponent implements OnInit {
         public readonly dialog: MatDialog,
         private readonly bannerService: BannerService,
         private readonly authService: AuthService,
+        private readonly bottomNavService: BottomNavService,
     ) { }
 
     ngOnInit(): void {
+        this.bottomNavService.setItems([
+            {icon: 'home', label: 'Home', routerLink: 'home'},
+            {icon: 'wc-wish', svgIcon: true, label: 'Wish Counter', routerLink: 'wish-counter'},
+        ]);
+
         this.authService.currentUser
         .pipe(filter(isNotNull))
         .subscribe((_user: User) => {
