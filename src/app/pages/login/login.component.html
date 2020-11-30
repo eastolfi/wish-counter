@@ -1,0 +1,17 @@
+<form [formGroup]="form" class="p-3">
+    <div class="d-flex flex-wrap">
+        <mat-form-field class="w-100">
+            <mat-label>Username / email</mat-label>
+            <input matInput placeholder="Username / email" formControlName="username" />
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Password" type="password" formControlName="password" />
+        </mat-form-field>
+
+        <button (click)="login()" mat-raised-button color="primary" [disabled]="form.invalid">Login</button>
+    </div>
+</form>
+
+<button *ngIf="currentUser" (click)="logout()" mat-raised-button color="accent">Log out</button>

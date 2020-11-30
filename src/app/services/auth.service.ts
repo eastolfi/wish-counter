@@ -34,22 +34,18 @@ export class AuthService {
         });
     }
 
-    public signUp(): void {
-        this.afAuth.createUserWithEmailAndPassword('pruebas@test.com', 'pruebas')
+    public signUp(username: string, password: string): void {
+        this.afAuth.createUserWithEmailAndPassword(username, password)
         .then(console.log)
         .catch(console.warn)
     }
 
-    public signIn(): void {
-        this.afAuth.signInWithEmailAndPassword('pruebas@test.com', 'pruebas')
-        .then(console.log)
-        .catch(console.warn)
+    public signIn(username: string, password: string): Promise<firebase.auth.UserCredential> {
+        return this.afAuth.signInWithEmailAndPassword(username, password);
     }
 
-    public signOut(): void {
-        this.afAuth.signOut()
-        .then(console.log)
-        .catch(console.warn)
+    public signOut(): Promise<void> {
+        return this.afAuth.signOut();
     }
 
     public googleSignIn(): void {
