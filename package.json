@@ -3,14 +3,15 @@
   "version": "1.0.0-rc1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "npm run config && ng serve",
+    "build:dev": "npm run config && ng build",
+    "build:prod": "npm run config -- --environment=prod && ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "bump:version": "",
     "config": "node ./src/scripts/setenv.js",
-    "build.and.deploy": "npm run config -- --environment=prod npm run build -- --prod && firebase deploy",
+    "build.and.deploy": "npm run build:prod && firebase deploy",
     "i18n:extract": "ngx-translate-extract --input ./src --output ./src/assets/locale/en.json ./src/assets/locale/es.json --clean --sort --format namespaced-json --marker _"
   },
   "private": true,

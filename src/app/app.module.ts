@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { CoreModule, FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AngularFireModule } from '@angular/fire';
@@ -12,9 +12,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { environment } from '../environments/environment';
-import { CardButtonComponent } from './components/card-button/card-button.component';
-import { BannerCounterComponent } from './components/banner-counter/banner-counter.component';
-import { WishCountEditDialogComponent } from './components/wish-count-edit-dialog/wish-count-edit-dialog.component';
+
 import { MaterialModule } from './components/material/material.module';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -26,10 +24,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
     declarations: [
-        AppComponent,
-        CardButtonComponent,
-        BannerCounterComponent,
-        WishCountEditDialogComponent
+        AppComponent
     ],
     imports: [
         BrowserModule,
@@ -38,7 +33,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         ReactiveFormsModule,
         FlexLayoutModule,
         AppRoutingModule,
-        MaterialModule,
+        CoreModule,
         TranslateModule.forRoot({
             defaultLanguage: 'es',
             loader: {
