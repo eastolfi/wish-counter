@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { MaterialModule } from 'src/app/components/material/material.module';
@@ -13,6 +14,7 @@ import { MaterialModule } from 'src/app/components/material/material.module';
     ],
     exports: [
         MaterialModule,
+        ReactiveFormsModule,
         TranslateModule
     ]
 })
