@@ -2,15 +2,23 @@ const updateJsonFile = require('update-json-file')
 
 // console.log(process.argv);
 
-let newVersion;
+const VERSION_OPTIONS = {
+    PATCH: 'PATCH',
+    PRE_RELEASE: 'PRE_RELEASE'
+}
 
-function parseArguments() {
+function getReleaseType() {
     if (process.argv.length > 2) {
         const arg = process.argv[2];
 
-        if (arg.includes('patch')) {
-            console.log('patch version')
+        if (arg.includes('prerelease')) {
+            return VERSION_OPTIONS.PRE_RELEASE;
         }
+
+        return VERSION_OPTIONS.PATCH;
+    } else {
+        console.error('Invalid version')
+        process.exit(1);
     }
 }
 
@@ -30,8 +38,48 @@ async function getCurrentVersion() {
     });
 }
 
-function calculateNewVersion() {
-    return '1.0.1';
+function calculateNewVersion(currentVersion, releaseType) {
+    const VERSION_SEPARATOR = '.';
+    const RELEASE_CANDIDATE_SEPARATOR = '-rc.';
+
+
+    let from = '';
+    if (currentVersion.indexOf('rc')) {
+        from = 'rc';
+    }
+
+    let major;
+    let minor;
+    let patch;
+    let releaseCandidate;
+
+    if (from === 'rc') {
+        const parts = currentVersion.split(RELEASE_CANDIDATE_SEPARATOR);
+
+        currentVersion = parts[0];
+        releaseCandidate = +parts[1];
+    }
+
+    const parts = currentVersion.split(VERSION_SEPARATOR);
+    major = +parts[0];
+    minor = +parts[1];
+    patch = +parts[2];
+
+    switch (releaseType) {
+        case VERSION_OPTIONS.PRE_RELEASE:
+            releaseCandidate++;
+            break;
+        default:
+            patch++;
+    }
+
+    const nextVersion = [major, minor, patch].join(VERSION_SEPARATOR);
+
+    if (releaseType === VERSION_OPTIONS.PRE_RELEASE) {
+        return [nextVersion, releaseCandidate].join(RELEASE_CANDIDATE_SEPARATOR);
+    } else {
+        return nextVersion;
+    }
 }
 
 function updateServiceWorker(newVersion) {
@@ -52,11 +100,11 @@ function updateVersion() {
         try {
             const version = await getCurrentVersion();
             // check bump type
-            const releaseType = 'rc';
+            // const releaseType = getReleaseType();
             // bump version
-            const newVersion = calculateNewVersion();
+            // const newVersion = calculateNewVersion(version, releaseType);
             // write file
-            await updateServiceWorker(newVersion);
+            await updateServiceWorker(version);
 
             resolve();
         } catch(error) {
