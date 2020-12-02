@@ -23,12 +23,16 @@ export class AuthService {
         private readonly afAuth: AngularFireAuth
     ) {
         this.afAuth.authState.subscribe((user: firebase.User) => {
-            this.saveCurrentUser({
-                id: user.uid,
-                email: user.email,
-                displayName: user.displayName,
-                emailVerified: user.emailVerified
-            })
+            if (user == null) {
+                this.saveCurrentUser(null);
+            } else {
+                this.saveCurrentUser({
+                    id: user.uid,
+                    email: user.email,
+                    displayName: user.displayName,
+                    emailVerified: user.emailVerified
+                })
+            }
         });
     }
 
