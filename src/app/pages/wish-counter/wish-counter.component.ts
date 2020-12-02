@@ -45,8 +45,7 @@ export class WishCounterComponent implements OnInit {
         .pipe(filter(isNotNull))
         .subscribe((_user: User) => {
             this.loadBanners();
-        })
-        this.authService.ensureUser();
+        });
     }
 
     public openWishEditDialog(banner: Banner): void {

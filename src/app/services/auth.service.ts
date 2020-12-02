@@ -3,7 +3,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase/app';
 import { BehaviorSubject } from 'rxjs';
 
-
 export interface User {
     id: string;
     displayName?: string;
@@ -16,6 +15,7 @@ export interface User {
 })
 export class AuthService {
     private readonly SESSION_USER_KEY = 'session-user';
+    private readonly EMPTY_USER = JSON.stringify(null);
 
     public currentUser = new BehaviorSubject<User>(null);
 
@@ -23,9 +23,7 @@ export class AuthService {
         private readonly afAuth: AngularFireAuth
     ) {
         this.afAuth.authState.subscribe((user: firebase.User) => {
-            if (user == null) {
-                this.saveCurrentUser(null);
-            } else {
+            if (user != null) {
                 this.saveCurrentUser({
                     id: user.uid,
                     email: user.email,
@@ -60,7 +58,7 @@ export class AuthService {
 
     public ensureUser(): void {
         const currentUser = localStorage.getItem(this.SESSION_USER_KEY);
-        if (!currentUser) {
+        if (currentUser === this.EMPTY_USER) {
             this.saveCurrentUser({
                 id: this.generateUserId(),
                 email: null,
