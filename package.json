@@ -12,9 +12,10 @@
     "config": "node ./src/scripts/setenv.js",
     "build.and.deploy": "npm run build:prod && firebase deploy",
     "i18n:extract": "ngx-translate-extract --input ./src --output ./src/assets/locale/en.json ./src/assets/locale/es.json --clean --sort --format namespaced-json --marker _",
-    "bump": "npm version --preid=rc -m \"chore(release): upgrade to %s\"",
+    "bump": "npm version --no-git-tag-version --preid=rc",
+    "bump:sw": "node ./src/scripts/release.js",
     "bump:pre-release": "npm run bump -- prerelease",
-    "postversion": "node ./src/scripts/release.js && git add ngsw-config.json && git commit -m \"chore: update SW version\" && git push && git push --tags"
+    "postversion": "npm run bump:sw"
   },
   "private": true,
   "dependencies": {

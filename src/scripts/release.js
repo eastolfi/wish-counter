@@ -1,4 +1,5 @@
 const updateJsonFile = require('update-json-file')
+const { exec } = require("child_process");
 
 // console.log(process.argv);
 
@@ -95,6 +96,42 @@ function updateServiceWorker(newVersion) {
     })
 }
 
+function handleError(resolve, reject) {
+    return (error, stdout) => {
+        if (error) {
+            reject(error.message);
+            return;
+        }
+
+        resolve(stdout);
+    }
+}
+
+function Promify(fnc, params, cb) {
+    return new Promise((resolve, reject) => {
+        fnc(...params, cb(resolve, reject))
+    });
+}
+
+function commitAndPush(newVersion) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const currentBranch = await Promify(exec, [`git rev-parse --abbrev-ref HEAD`], handleError);
+            await Promify(exec, [`git checkout -b release_${newVersion}`], handleError);
+            await Promify(exec, [`git add .`], handleError);
+            await Promify(exec, [`git commit -m "chore(release): release new version ${newVersion}"`], handleError);
+            await Promify(exec, [`git tag ${newVersion}`], handleError);
+            await Promify(exec, [`git push -u origin release_${newVersion}`], handleError);
+            await Promify(exec, [`git push --tags`], handleError);
+            await Promify(exec, [`git checkout ${currentBranch.trim()}`], handleError);
+
+            resolve();
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
 function updateVersion() {
     return new Promise(async (resolve, reject) => {
         try {
@@ -105,6 +142,8 @@ function updateVersion() {
             // const newVersion = calculateNewVersion(version, releaseType);
             // write file
             await updateServiceWorker(version);
+
+            await commitAndPush(version);
 
             resolve();
         } catch(error) {
