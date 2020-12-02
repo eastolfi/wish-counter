@@ -19,9 +19,15 @@ export class MigrationService {
     ) { }
 
     public migrate(from: string, to: string): Promise<void> {
-        if (to === '1.0.0-rc1') {
+        if (localStorage.getItem(WISHES_STORAGE_KEY)) {
             return this.migrateFromBeta();
         }
+
+        // if (to === '1.0.0-rc1') {
+        //     return this.migrateFromBeta();
+        // }
+
+        return Promise.resolve();
     }
 
     private migrateFromBeta(): Promise<void> {
@@ -35,7 +41,10 @@ export class MigrationService {
                 });
 
                 Promise.all(p)
-                .then((_result) => resolve())
+                .then((_result) => {
+                    localStorage.removeItem(WISHES_STORAGE_KEY);
+                    resolve();
+                })
                 .catch(reject);
             } else {
                 resolve();

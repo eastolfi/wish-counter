@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
-import { SwUpdate, UpdateAvailableEvent } from '@angular/service-worker';
-import { TranslateService } from '@ngx-translate/core';
+
 import { marker as extract } from '@biesbjerg/ngx-translate-extract-marker';
 import { filter } from 'rxjs/operators';
 
@@ -11,7 +10,6 @@ import { BannerFactory } from '../../factories/banner.factory';
 import { Banner, BannerType, Rarity } from '../../models/banner';
 import { BannerService } from '../../services/banner.service';
 import { AuthService, User } from '../../services/auth.service';
-import { MigrationService } from '../../services/migration.service';
 
 extract([
     'system.update.new-version-available',
@@ -38,27 +36,9 @@ export class WishCounterComponent implements OnInit {
 
     constructor(
         public readonly dialog: MatDialog,
-        private readonly updates: SwUpdate,
-        private readonly translate: TranslateService,
         private readonly bannerService: BannerService,
         private readonly authService: AuthService,
-        private readonly migrationService: MigrationService,
-    ) {
-        this.updates.available.subscribe(async (event: UpdateAvailableEvent) => {
-            if (confirm(await this.translate.get('system.update.new-version-available', { version: event.available.appData['version'] }).toPromise())) {
-                this.migrationService.migrate(event.current.appData['version'], event.available.appData['version'])
-                .then(/* do nothing ? */)
-                .catch(/* flag as failed migration */)
-                .finally(() => window.location.reload());
-            }
-        });
-        // updates.activated.subscribe(event => {
-        //     alert(`App updated. Old version was ${event.previous}. New version is ${event.current}`)
-        // });
-        // this.wishService.searchUserBanners('12345').subscribe((banner: Banner) => {
-        //     console.log(banner);
-        // });
-    }
+    ) { }
 
     ngOnInit(): void {
         this.authService.currentUser
@@ -67,9 +47,6 @@ export class WishCounterComponent implements OnInit {
             this.loadBanners();
         })
         this.authService.ensureUser();
-    }
-    test() {
-        this.migrationService.migrate('1.0.0-rc1', '');
     }
 
     public openWishEditDialog(banner: Banner): void {
