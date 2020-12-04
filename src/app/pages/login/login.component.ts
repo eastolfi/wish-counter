@@ -12,6 +12,7 @@ import { AuthService, User } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
     public form: FormGroup;
+    public selectedTab = this.fb.control(0);
 
     private returnUrl: string;
 
@@ -38,19 +39,35 @@ export class LoginComponent implements OnInit {
         this.bottomNavService.setItems([]);
     }
 
+    public selectLoginTab(): void {
+        this.selectedTab.setValue(0);
+    }
+
+    public selectRegisterTab(): void {
+        this.selectedTab.setValue(1);
+    }
+
     public login(): void {
-        this.authService.signIn(this.form.get('username').value, this.form.get('password').value)
+        this.authService.signIn(this.form.get('email').value, this.form.get('password').value)
         .then(() => console.log('Logged in'))
         .catch(console.error);
     }
 
-    // register() {
-    //     this.authService.signUp();
-    // }
+    public logAnonymous(): void {
+        this.authService.signInAnonymously()
+        .then(() => console.log('Logged in'))
+        .catch(console.error);
+    }
+
+    public register(): void {
+        this.authService.signUp(this.form.get('email').value, this.form.get('password').value)
+        .then(() => console.log('Registered in'))
+        .catch(console.error);
+    }
 
     private initForm() {
         this.form = this.fb.group({
-            username: ['', Validators.required],
+            email: ['', Validators.required],
             password: ['', Validators.required]
         });
     }

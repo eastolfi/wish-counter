@@ -1,1 +1,28 @@
-<button *ngIf="currentUser" (click)="logout()" mat-raised-button color="accent">Log out</button>
+<!-- Anonymous profile -->
+<ng-container *ngIf="!currentUser?.email" [formGroup]="anomymForm">
+    <div class="d-flex flex-wrap">
+        <p class="w-100">You are currently in a anonymous session. To save your progress across devices, please create an account</p>
+
+        <p>To do so, introduce an email to send you a link to create your account.</p>
+
+        <mat-form-field class="w-100">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" formControlName="email" />
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Password" type="password" formControlName="password" />
+        </mat-form-field>
+
+        <button (click)="updateMail()" mat-raised-button color="accent" [disabled]="anomymForm.invalid">Create account</button>
+    </div>
+</ng-container>
+
+<!-- Standard profile -->
+<ng-container *ngIf="currentUser?.email" [formGroup]="form">
+
+    <div class="d-flex">
+        <button *ngIf="currentUser" (click)="logout()" mat-raised-button color="accent">Log out</button>
+    </div>
+</ng-container>

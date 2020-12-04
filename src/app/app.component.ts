@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.authService.ensureUser();
+        this.authService.checkLocalUser();
 
         this.updates.available.subscribe(async (event: UpdateAvailableEvent) => {
             if (confirm(await this.translate.get('system.update.new-version-available', { version: event.available.appData['version'] }).toPromise())) {
