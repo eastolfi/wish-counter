@@ -6,9 +6,7 @@ import { BottomNavItem } from './bottom-nav';
 export class BottomNavService {
     private items$ = new BehaviorSubject<BottomNavItem[]>([]);
 
-    constructor() {
-        this.items$.subscribe(i => console.log(i))
-    }
+    constructor() { }
 
     public setItems(items: BottomNavItem[]): void {
         this.items$.next(items);
