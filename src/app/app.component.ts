@@ -20,19 +20,25 @@ export class AppComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.authService.checkLocalUser();
-
         this.updates.available.subscribe(async (event: UpdateAvailableEvent) => {
             if (confirm(await this.translate.get('system.update.new-version-available', { version: event.available.appData['version'] }).toPromise())) {
-                this.migrationService.migrate(event.current.appData['version'], event.available.appData['version'])
-                .then(/* do nothing ? */)
-                .catch(/* flag as failed migration */)
-                .finally(() => window.location.reload());
+                // Put the migration in queue and reload to update it
+                this.migrationService.queueMigration(event.current.appData['version'], event.available.appData['version']);
+                window.location.reload();
             }
         });
+
+        if (this.migrationService.hasMigrationInQueue()) {
+            this.migrationService.migrate()
+            .then(/* do nothing ? */)
+            .catch(/* flag as failed migration */)
+            .finally(() => window.location.reload());
+        } else {
+            this.init();
+        }
     }
 
-    test() {
-        this.migrationService.migrate('1.0.0-rc1', '1.0.0-rc2');
+    private init(): void {
+        this.authService.ensureUser();
     }
 }
