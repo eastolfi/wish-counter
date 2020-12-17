@@ -99,6 +99,11 @@ export class AuthService {
         }
     }
 
+    public clearLocalUser(): void {
+        localStorage.removeItem(this.SESSION_USER_KEY);
+        this.emitCurrentUser(null);
+    }
+
     private emitCurrentUser(user: User): void {
         this.currentUser.next(user);
     }
