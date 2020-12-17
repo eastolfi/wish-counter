@@ -1,2 +1,43 @@
-<p>Home</p>
+<ng-container *ngIf="currentUser" [formGroup]="form">
+    <div class="d-flex justify-content-around">
+        <button mat-icon-button aria-label="View drops for the previous day">
+            <mat-icon>chevron_left</mat-icon>
+        </button>
 
+        <h3 class="w-100 text-center py-1">Current daily rotation - {{ form.get('weekday').value }}</h3>
+
+        <button mat-icon-button aria-label="View drops for the next day">
+            <mat-icon>chevron_right</mat-icon>
+        </button>
+        <!-- <button mat-icon-button aria-label="View drops for the next day">
+            <mat-icon>calendar_today</mat-icon>
+        </button> -->
+
+        <!-- <select formControlName="weekday">
+            <option value="monday">Monday</option>
+            <option value="tuesday">Tuesday</option>
+            <option value="wednesday">Wednesday</option>
+            <option value="thursday">Thursday</option>
+            <option value="friday">Friday</option>
+            <option value="saturday">Saturday</option>
+            <option value="sunday">Sunday</option>
+        </select> -->
+    </div>
+
+
+    <div class="d-flex justify-content-around flex-wrap">
+        <mat-card class="drop-card mb-3" matRipple *ngFor="let drop of getDailyRotation().weaponDrops">
+            <mat-card-title>{{ drop.item }}</mat-card-title>
+            <mat-card-subtitle>{{ drop.altName }}</mat-card-subtitle>
+        </mat-card>
+    </div>
+
+    <hr />
+
+    <div class="d-flex justify-content-around flex-wrap">
+        <mat-card class="drop-card mb-3" matRipple *ngFor="let drop of getDailyRotation().talentDrops">
+            <mat-card-title>{{ drop.item }}</mat-card-title>
+            <mat-card-subtitle>{{ drop.characters.join(', ') }}</mat-card-subtitle>
+        </mat-card>
+    </div>
+</ng-container>
