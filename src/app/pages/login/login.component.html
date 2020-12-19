@@ -1,47 +1,32 @@
-<form [formGroup]="form" class="p-3">
-
-    <mat-tab-group mat-align-tabs="center" [selectedIndex]="selectedTab.value">
-        <mat-tab label="Login">
-            <div class="d-flex justify-content-around flex-wrap">
-                <mat-form-field class="w-100">
-                    <mat-label>Email</mat-label>
-                    <input matInput placeholder="Email" formControlName="email" />
-                </mat-form-field>
-
-                <mat-form-field class="w-100">
-                    <mat-label>Password</mat-label>
-                    <input matInput placeholder="Password" type="password" formControlName="password" />
-                </mat-form-field>
-
-                <a class="w-502" href="">Forgot your password?</a>
-                <a class="w-502" (click)="selectRegisterTab()" [routerLink]="">Don't have an account?</a>
-
-                <div class="w-100 d-flex justify-content-around pt-3">
-                    <button class="w-50" (click)="login()" mat-raised-button color="primary" [disabled]="form.invalid">Login</button>
-                </div>
-
-                <div class="w-100 d-flex justify-content-around pt-2">
-                    <button class="w-50" (click)="logAnonymous()" mat-raised-button color="accent">Continue without login</button>
-                </div>
-            </div>
-        </mat-tab>
-
-        <mat-tab label="Register">
-            <mat-form-field class="w-100">
-                <mat-label>Email</mat-label>
-                <input matInput placeholder="Email" formControlName="email" />
-            </mat-form-field>
-
-            <mat-form-field class="w-100">
-                <mat-label>Password</mat-label>
-                <input matInput placeholder="Password" type="password" formControlName="password" />
-            </mat-form-field>
-
-            <a class="w-502" (click)="selectLoginTab()" [routerLink]="">Already have an account?</a>
-
-            <div class="w-100 d-flex justify-content-around pt-3">
-                <button class="w-50" (click)="register()" mat-raised-button color="primary" [disabled]="form.invalid">Create account</button>
-            </div>
-        </mat-tab>
-    </mat-tab-group>
-</form>
+<ngx-auth-firebaseui
+    [providers]="['google', 'facebook']"
+    [providersTheme]="'raised'"
+    (onSuccess)="onUserLogged($event)"
+    [signInTabText]="'firebaseui.sign-in.tab' | translate"
+    [signInCardTitleText]="'firebaseui.sign-in.title' | translate"
+    [loginButtonText]="'firebaseui.sign-in.button' | translate"
+    [forgotPasswordButtonText]="'firebaseui.sign-in.forgot-password' | translate"
+    [nameText]="'firebaseui.input.name.field' | translate"
+    [nameErrorRequiredText]="'firebaseui.input.name.error.required' | translate"
+    [nameErrorMinLengthText]="'firebaseui.input.name.error.min-length' | translate"
+    [nameErrorMaxLengthText]="'firebaseui.input.name.error.max-length' | translate"
+    [emailText]="'firebaseui.input.email.field' | translate"
+    [emailErrorRequiredText]="'firebaseui.input.email.error.required' | translate"
+    [emailErrorPatternText]="'firebaseui.input.email.error.pattern' | translate"
+    [passwordText]="'firebaseui.input.password.field' | translate"
+    [passwordErrorRequiredText]="'firebaseui.input.password.error.required' | translate"
+    [passwordErrorMinLengthText]="'firebaseui.input.password.error.min-length' | translate"
+    [passwordErrorMaxLengthText]="'firebaseui.input.password.error.max-length' | translate"
+    [registerTabText]="'firebaseui.sign-up.tab' | translate"
+    [registerCardTitleText]="'firebaseui.sign-up.title' | translate"
+    [registerButtonText]="'firebaseui.sign-up.button' | translate"
+    [guestButtonText]="'firebaseui.sign-up.guest' | translate"
+    [resetPasswordTabText]="'firebaseui.reset-password.tab' | translate"
+    [resetPasswordInputText]="'firebaseui.reset-password.input' | translate"
+    [resetPasswordErrorRequiredText]="'firebaseui.reset-password.error.required' | translate"
+    [resetPasswordErrorPatternText]="'firebaseui.reset-password.error.pattern' | translate"
+    [resetPasswordActionButtonText]="'firebaseui.reset-password.button' | translate"
+    [resetPasswordInstructionsText]="'firebaseui.reset-password.instructions' | translate"
+    [emailConfirmationTitle]="'firebaseui.email-confirmation.title' | translate"
+    [emailConfirmationText]="'firebaseui.email-confirmation.text' | translate"
+></ngx-auth-firebaseui>

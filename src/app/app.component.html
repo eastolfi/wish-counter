@@ -2,6 +2,18 @@
 
 <ngx-bottom-nav [items]="menuItems"></ngx-bottom-nav> -->
 
+<mat-toolbar color="primary">
+    <span>Genshin Companion</span>
+    <span fxFlex></span>
+    <ngx-auth-firebaseui-avatar
+        [canLogout]="true"
+        [canViewAccount]="true"
+        [textProfile]="'Cuenta'"
+        [textSignOut]="'Salir'"
+        (onSignOut)="reload()"
+    ></ngx-auth-firebaseui-avatar>
+</mat-toolbar>
+
 <div class="content">
     <router-outlet></router-outlet>
 </div>

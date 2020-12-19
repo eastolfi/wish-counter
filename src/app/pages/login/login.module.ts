@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 
 import { CoreModule } from 'src/app/modules/core/core.module';
 
@@ -11,6 +12,7 @@ import { LoginRoutingModule } from './login-routing.module';
     imports: [
         CommonModule,
         CoreModule,
+        NgxAuthFirebaseUIModule,
         LoginRoutingModule
     ]
 })

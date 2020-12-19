@@ -3,8 +3,6 @@ import { SwUpdate, UpdateAvailableEvent } from '@angular/service-worker';
 import { TranslateService } from '@ngx-translate/core';
 
 import { MigrationService } from './services/migration.service';
-import { AuthService } from './services/auth.service';
-
 
 @Component({
     selector: 'wc-root',
@@ -15,7 +13,6 @@ export class AppComponent implements OnInit {
     constructor(
         private readonly updates: SwUpdate,
         private readonly translate: TranslateService,
-        private readonly authService: AuthService,
         private readonly migrationService: MigrationService,
     ) { }
 
@@ -40,5 +37,9 @@ export class AppComponent implements OnInit {
 
     private init(): void {
         this.authService.ensureUser();
+    }
+
+    public reload(): void {
+        window.location.reload();
     }
 }

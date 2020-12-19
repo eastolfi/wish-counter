@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
-import { LoggedGuard } from 'src/app/guards/logged.guard';
+import { LoggedInGuard } from 'ngx-auth-firebaseui';
 
 import { WishCounterComponent } from './wish-counter.component';
 
@@ -9,7 +8,7 @@ const routes: Routes = [
     {
         path: '',
         component: WishCounterComponent,
-        canActivate: [ LoggedGuard ]
+        canActivate: [ LoggedInGuard ]
     }
 ];
 

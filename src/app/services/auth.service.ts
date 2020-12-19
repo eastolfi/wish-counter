@@ -24,17 +24,18 @@ export class AuthService {
     ) {
         this.afAuth.authState.subscribe((user: firebase.User) => {
             if (user != null) {
-                this.saveCurrentUser({
+                this.emitCurrentUser({
                     id: user.uid,
                     email: user.email,
                     displayName: user.displayName,
                     emailVerified: user.emailVerified
                 });
+            } else {
+                this.emitCurrentUser(null);
             }
         });
     }
 
-    // improve with local storage
     public isUserValid(): boolean {
         return this.currentUser.value != null;
     }
