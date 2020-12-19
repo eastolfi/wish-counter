@@ -3,7 +3,7 @@ import { AngularFirestore, CollectionReference, DocumentChangeAction, DocumentRe
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Banner } from '../models/banner';
-import { AuthService } from './auth.service';
+import { AuthService, User } from './auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -16,11 +16,11 @@ export class BannerService {
         private readonly authService: AuthService,
     ) { }
 
-    public searchUserBanners(): Observable<Banner[]> {
-        const user = this.authService.currentUser.value;
+    public searchUserBanners(user?: User): Observable<Banner[]> {
+        const currentUser = user || this.authService.currentUser.value;
 
         return this.firestore.collection(this.USER_BANNERS_COLLECTION,
-        (ref: CollectionReference) => ref.where('userId', '==', user.id))
+        (ref: CollectionReference) => ref.where('userId', '==', currentUser.id))
             .snapshotChanges()
             .pipe(
                 map((bannerActions: DocumentChangeAction<Banner>[]) => {
@@ -34,8 +34,8 @@ export class BannerService {
             );
     }
 
-    public saveUserBanner(banner: Banner): Promise<void> {
-        const user = this.authService.currentUser.value;
+    public saveUserBanner(banner: Banner, user?: User): Promise<void> {
+        const currentUser = user || this.authService.currentUser.value;
 
         return new Promise((resolve, reject) => {
             if (banner.id) {
@@ -52,11 +52,11 @@ export class BannerService {
             } else {
                 this.firestore.collection(this.USER_BANNERS_COLLECTION)
                     .add({
-                        userId: user.id,
+                        userId: currentUser.id,
                         ...banner
                     })
                     .then((result: DocumentReference<Banner>) => {
-                        banner.userId = user.id;
+                        banner.userId = currentUser.id;
                         banner.id = result.id;
                         resolve();
                     })

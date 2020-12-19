@@ -62,10 +62,10 @@ export class MigrationService {
         return new Promise(async (resolve, reject) => {
             try {
                 // Recover the local user
-                this.authService.checkLocalUser();
+                const localUser: User = this.authService.getLocalUser();
 
                 // Recover the banners saved for the local user
-                const banners = await this.bannerService.searchUserBanners().pipe(first()).toPromise();
+                const banners = await this.bannerService.searchUserBanners(localUser).pipe(first()).toPromise();
 
                 // Clear the custom local user
                 this.authService.clearLocalUser();
