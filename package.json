@@ -14,7 +14,10 @@
     "i18n:extract": "ngx-translate-extract --input ./src --output ./src/assets/locale/en.json ./src/assets/locale/es.json --clean --sort --format namespaced-json --marker _",
     "bump": "npm version --no-git-tag-version --preid=rc",
     "bump:sw": "node ./src/scripts/release.js",
-    "bump:pre-release": "npm run bump -- prerelease",
+    "release:pre-release": "npm run bump -- prerelease && npm run build.and.deploy",
+    "release:patch": "npm run bump -- patch && npm run build.and.deploy",
+    "release:minor": "npm run bump -- minor && npm run build.and.deploy",
+    "release:major": "npm run bump -- major && npm run build.and.deploy",
     "postversion": "npm run bump:sw"
   },
   "private": true,
