@@ -30,6 +30,59 @@
 			"edit": "Edit"
 		}
 	},
+	"firebaseui": {
+		"email-confirmation": {
+			"text": "A confirmation e-mail has been sent to you. Check your inbox and click on the link to confirm your e-mail address.",
+			"title": "Confirm your e-mail address"
+		},
+		"input": {
+			"email": {
+				"error": {
+					"pattern": "Please enter a valid e-mail address",
+					"required": "E-mail is required"
+				},
+				"field": "E-mail"
+			},
+			"name": {
+				"error": {
+					"max-length": "The name is too long",
+					"min-length": "The name is too short",
+					"required": "Name is required"
+				},
+				"field": "Name"
+			},
+			"password": {
+				"error": {
+					"max-length": "The password is too long",
+					"min-length": "The password is too short",
+					"required": "Password is required"
+				},
+				"field": "Password"
+			}
+		},
+		"reset-password": {
+			"button": "Reset",
+			"error": {
+				"pattern": "Please enter a valid e-mail address",
+				"required": "E-mail is required to reset the password"
+			},
+			"input": "E-mail address",
+			"instructions": "Reset requested. Check your e-mail instructions.",
+			"tab": "Reset your password"
+		},
+		"sign-in": {
+			"button": "Log In",
+			"forgot-password": "Forgot Password ?",
+			"tab": "Sign in",
+			"title": "Signing in"
+		},
+		"sign-up": {
+			"button": "Register",
+			"guest": "Continue as guest",
+			"tab": "Register",
+			"title": "Registration"
+		}
+	},
 	"game": {
 		"invocable": {
 			"rarity": {

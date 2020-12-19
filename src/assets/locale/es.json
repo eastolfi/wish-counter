@@ -30,6 +30,59 @@
 			"edit": "Editar"
 		}
 	},
+	"firebaseui": {
+		"email-confirmation": {
+			"text": "Se le ha enviado e-mail de confirmación. Comprueba tu bandeja de entrada y haga click en el enlace para confirmar su dirección de correo.",
+			"title": "Confirme su dirección de correo"
+		},
+		"input": {
+			"email": {
+				"error": {
+					"pattern": "Por favor, introduce una dirección válida",
+					"required": "Debe completar la dirección de correo"
+				},
+				"field": "Dirección de correo"
+			},
+			"name": {
+				"error": {
+					"max-length": "El nombre es demasiado largo",
+					"min-length": "El nombre es demasiado corto",
+					"required": "Debe completar el nombre"
+				},
+				"field": "Nombre"
+			},
+			"password": {
+				"error": {
+					"max-length": "La contraseña es demasiado larga",
+					"min-length": "La contraseña es demasiado corta",
+					"required": "Debe completar la contraseña"
+				},
+				"field": "Contraseña"
+			}
+		},
+		"reset-password": {
+			"button": "Reiniciar",
+			"error": {
+				"pattern": "Por favor, introduce una dirección válida",
+				"required": "Debe introducir una dirección de correo."
+			},
+			"input": "Dirección de correo para el reinicio",
+			"instructions": "Se ha solicitado el reinicio. Comprueba las instrucciones recibidas en el e-mail.",
+			"tab": "Reinicio de contraseña"
+		},
+		"sign-in": {
+			"button": "Conectarse",
+			"forgot-password": "¿Has olvidado tu contraseña?",
+			"tab": "Iniciar Sesión",
+			"title": "Inicio de sesión"
+		},
+		"sign-up": {
+			"button": "Crear cuenta",
+			"guest": "Continuar con una cuenta de invitado",
+			"tab": "Crear Cuenta",
+			"title": "Registrarse"
+		}
+	},
 	"game": {
 		"invocable": {
 			"rarity": {
