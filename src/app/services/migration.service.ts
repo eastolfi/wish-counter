@@ -32,6 +32,8 @@ export class MigrationService {
     public migrate(): Promise<void> {
         const { from, to } = JSON.parse(localStorage.getItem(this.STORAGE_KEY_MIGRATION_QUEUE));
 
+        localStorage.removeItem(this.STORAGE_KEY_MIGRATION_QUEUE);
+
         return Promise.resolve();
     }
 }
