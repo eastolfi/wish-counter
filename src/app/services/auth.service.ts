@@ -58,7 +58,7 @@ export class AuthService {
 
     public ensureUser(): void {
         const currentUser = localStorage.getItem(this.SESSION_USER_KEY);
-        if (currentUser === this.EMPTY_USER) {
+        if (!currentUser || currentUser === this.EMPTY_USER) {
             this.saveCurrentUser({
                 id: this.generateUserId(),
                 email: null,
