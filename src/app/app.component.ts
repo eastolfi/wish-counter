@@ -25,19 +25,17 @@ export class AppComponent implements OnInit {
             }
         });
 
+        this.init();
+
         if (this.migrationService.hasMigrationInQueue()) {
             this.migrationService.migrate()
             .then(/* do nothing ? */)
             .catch(/* flag as failed migration */)
             .finally(() => window.location.reload());
-        } else {
-            this.init();
         }
     }
 
-    private init(): void {
-        this.authService.ensureUser();
-    }
+    private init(): void { }
 
     public reload(): void {
         window.location.reload();

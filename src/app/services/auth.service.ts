@@ -70,51 +70,7 @@ export class AuthService {
         });
     }
 
-    public signOutAnonym(): void {
-        this.emitCurrentUser(null);
-    }
-
-    public googleSignIn(): void {
-        //
-    }
-
-    public ensureUser(): void {
-        const localUser: User = this.getLocalUser();
-
-        if (localUser == null) {
-            this.saveCurrentUser({
-                id: this.generateUserId(),
-                email: null,
-                emailVerified: false
-            });
-        } else {
-            this.emitCurrentUser(localUser);
-        }
-    }
-
-    public checkLocalUser(): void {
-        const localUser: User = this.getLocalUser();
-
-        if (localUser != null) {
-            this.emitCurrentUser(localUser);
-        }
-    }
-
-    public clearLocalUser(): void {
-        localStorage.removeItem(this.SESSION_USER_KEY);
-        this.emitCurrentUser(null);
-    }
-
-    private emitCurrentUser(user: User): void {
-        this.currentUser.next(user);
-    }
-
-    private saveCurrentUser(user: User): void {
-        localStorage.setItem(this.SESSION_USER_KEY, JSON.stringify(user));
-        this.emitCurrentUser(user);
-    }
-
-    private getLocalUser(): User {
+    public getLocalUser(): User {
         const currentUser = localStorage.getItem(this.SESSION_USER_KEY);
 
         if (currentUser != null && currentUser !== this.EMPTY_USER) {
@@ -124,9 +80,12 @@ export class AuthService {
         return null;
     }
 
-    private generateUserId(): string {
-        return (`${1e7}-${1e3}-${4e3}-${8e3}-${1e11}`).replace(/[018]/g, c =>
-            (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
-        );
+    public clearLocalUser(): void {
+        localStorage.removeItem(this.SESSION_USER_KEY);
+        this.emitCurrentUser(null);
+    }
+
+    private emitCurrentUser(user: User): void {
+        this.currentUser.next(user);
     }
 }
