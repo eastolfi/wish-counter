@@ -2,11 +2,11 @@
 	"banner": {
 		"character": {
 			"permanent": {
-				"description": "Invocación del trotamundos",
+				"description": "Pasión por viajar",
 				"title": "Personaje - Permanente"
 			},
 			"temporal": {
-				"description": "Soledad de la nobleza",
+				"description": "Susurros enigmáticos",
 				"title": "Personaje - Temporal"
 			}
 		},
