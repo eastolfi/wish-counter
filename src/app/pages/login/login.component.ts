@@ -27,9 +27,8 @@ export class LoginComponent implements OnInit {
     public onUserLogged(user: firebase.User): void {
         if (user) {
             if (this.returnUrl) {
-                this.router.navigateByUrl(this.returnUrl)
+                this.router.navigate([ this.returnUrl ])
             }
         }
-
     }
 }
