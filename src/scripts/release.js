@@ -117,13 +117,17 @@ function commitAndPush(newVersion) {
     return new Promise(async (resolve, reject) => {
         try {
             const currentBranch = await Promify(exec, [`git rev-parse --abbrev-ref HEAD`], handleError);
-            await Promify(exec, [`git checkout -b release_${newVersion}`], handleError);
+            const releaseBranch = `release_${newVersion}`
+            await Promify(exec, [`git checkout -b ${releaseBranch}`], handleError);
+            // tests
             await Promify(exec, [`git add .`], handleError);
             await Promify(exec, [`git commit -m "chore(release): release new version ${newVersion}"`], handleError);
+            await Promify(exec, [`git push -u origin ${releaseBranch}`], handleError);
+            await Promify(exec, [`git checkout ${currentBranch}`], handleError);
+            await Promify(exec, [`git merge --ff-only ${releaseBranch}`], handleError);
+            await Promify(exec, [`git push -u origin ${releaseBranch}`], handleError);
             await Promify(exec, [`git tag ${newVersion}`], handleError);
-            await Promify(exec, [`git push -u origin release_${newVersion}`], handleError);
             await Promify(exec, [`git push --tags`], handleError);
-            await Promify(exec, [`git checkout ${currentBranch.trim()}`], handleError);
 
             resolve();
         } catch (error) {
