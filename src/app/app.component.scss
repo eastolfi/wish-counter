@@ -1,6 +1,6 @@
 .content {
     overflow: auto;
-    height: calc(100vh - /*header*/56px - /*bottom*/56px);
+    height: calc(100vh - /*header*/56px - /*bottom*/56px - /*scroll*/8px);
 }
 
 ngx-bottom-nav {

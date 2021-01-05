@@ -1,7 +1,7 @@
 import { Invocable } from './invocable';
 
 export enum Rarity {
-    EPIC = 5, RARE = 4, COMMON = 3
+    EPIC = 5, RARE = 4, COMMON = 3, FODDER = 2
 }
 
 export enum PittyCap {

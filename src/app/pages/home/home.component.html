@@ -1,2 +1,58 @@
-<p>Home</p>
+<!-- <p>Home</p>
 
+ -->
+
+<form [formGroup]="alchemyForm">
+    <h4>Vajrada Amethyst (Electro)</h4>
+
+    <mat-form-field>
+        <mat-label>Gemstone (5*)</mat-label>
+        <input formControlName="gemstone" matInput type="number" (change)="updateMaterials(Element.Electro)" />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Chunk (4*)</mat-label>
+        <input formControlName="chunk" matInput type="number" (change)="updateMaterials(Element.Electro)" />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Fragment (3*)</mat-label>
+        <input formControlName="fragment" matInput type="number" (change)="updateMaterials(Element.Electro)" />
+    </mat-form-field>
+
+    <p>Craft 162 2* into 54 3*</p>
+    <p>Craft 54 3* into 18 4*</p>
+    <p>Craft 18 4* into 6 5*</p>
+</form>
+
+
+<h3>Inventory</h3>
+
+<h4>Player Ascension</h4>
+
+<div *ngFor="let element of Element | keyvalue">
+    <h5>{{ element.value }}</h5>
+
+    <div class="d-flex justify-content-around">
+        <wc-card-button class="text-center">
+            <span>Gemstone {{ inventory.ascensionGems[element.value].gemstone }}</span>
+        </wc-card-button>
+
+        <wc-card-button class="text-center">
+            <span>Chunk {{ inventory.ascensionGems[element.value].chunk }}</span>
+        </wc-card-button>
+
+        <wc-card-button class="text-center">
+            <span>Fragment {{ inventory.ascensionGems[element.value].fragment }}</span>
+        </wc-card-button>
+
+        <wc-card-button class="text-center">
+            <span>Sliver {{ inventory.ascensionGems[element.value].sliver }}</span>
+        </wc-card-button>
+    </div>
+</div>
+
+<!-- <mat-form-field>
+    <mat-label>Gemstone (5*)</mat-label>
+    <input matInput type="number" (change)="updateMaterials($event.target.value)" />
+</mat-form-field> -->

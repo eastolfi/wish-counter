@@ -4,9 +4,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { MaterialModule } from 'src/app/components/material/material.module';
+import { CardButtonComponent } from 'src/app/components/card-button/card-button.component';
 
 @NgModule({
-    declarations: [],
+    declarations: [
+        CardButtonComponent,
+    ],
     imports: [
         CommonModule,
         TranslateModule,
@@ -15,7 +18,8 @@ import { MaterialModule } from 'src/app/components/material/material.module';
     exports: [
         MaterialModule,
         ReactiveFormsModule,
-        TranslateModule
+        TranslateModule,
+        CardButtonComponent
     ]
 })
 export class CoreModule { }
