@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { CoreModule, FlexLayoutModule } from '@angular/flex-layout';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -42,6 +42,8 @@ const firebaseUiConfig: NgxAuthFirebaseUIConfig = {
     enableEmailVerification: false, // default: true
 }
 
+const DEFAULT_LANGUAGE = 'en';
+
 @NgModule({
     declarations: [
         AppComponent
@@ -55,7 +57,7 @@ const firebaseUiConfig: NgxAuthFirebaseUIConfig = {
         BottomNavModule,
         ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
         TranslateModule.forRoot({
-            defaultLanguage: 'es',
+            defaultLanguage: DEFAULT_LANGUAGE,
             loader: {
                 provide: TranslateLoader,
                 useFactory: HttpLoaderFactory,
@@ -79,10 +81,15 @@ export class AppModule {
     constructor(
         private readonly domSanitizer: DomSanitizer,
         private readonly iconRegistry: MatIconRegistry,
+        private readonly translate: TranslateService,
     ) {
         this.iconRegistry.addSvgIcon(
             'wc-wish',
             this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/icons/wish.svg')
         );
+
+        const { language } = navigator;
+
+        this.translate.use(language ? language.split('-')[0] : DEFAULT_LANGUAGE);
     }
 }
