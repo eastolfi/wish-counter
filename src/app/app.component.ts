@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore, DocumentChangeAction } from '@angular/fire/firestore';
 import { SwUpdate, UpdateAvailableEvent } from '@angular/service-worker';
 import { TranslateService } from '@ngx-translate/core';
 import { marker as extract } from '@biesbjerg/ngx-translate-extract-marker';
@@ -33,11 +34,12 @@ export class AppComponent implements OnInit {
 
         this.init();
 
+        // put up loading and await
         if (this.migrationService.hasMigrationInQueue()) {
             this.migrationService.migrate()
             .then(/* do nothing ? */)
             .catch(/* flag as failed migration */)
-            .finally(() => window.location.reload());
+            // .finally(() => window.location.reload());
         }
     }
 
