@@ -1,24 +1,15 @@
 {
 	"banner": {
 		"character": {
-			"permanent": {
-				"description": "Wanderlust Invocation",
-				"title": "Character - Permanent"
-			},
-			"temporal": {
-				"description": "Secretum Secretorum",
-				"title": "Character - Temporal"
-			}
+			"permanent": "Character - Permanent",
+			"temporal": "Character - Temporal"
 		},
 		"pitty": {
 			"countdown": "{{ rarity }}* in at least {{ countdown }} wishes",
 			"next-asured": "The next wish should be a {{ rarity }}*"
 		},
 		"weapon": {
-			"temporal": {
-				"description": "Epitome Invocation",
-				"title": "Weapon - Temporal"
-			}
+			"temporal": "Weapon - Temporal"
 		},
 		"wishes": {
 			"total": "Total wishes: {{ total }}"

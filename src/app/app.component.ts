@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { SwUpdate, UpdateAvailableEvent } from '@angular/service-worker';
 import { TranslateService } from '@ngx-translate/core';
+import { marker as extract } from '@biesbjerg/ngx-translate-extract-marker';
+
 
 import { MigrationService } from './services/migration.service';
+
+extract([
+    'system.update.new-version-available',
+])
 
 @Component({
     selector: 'wc-root',

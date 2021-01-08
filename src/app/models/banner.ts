@@ -16,13 +16,17 @@ export enum BannerType {
 
 export interface Banner {
     id?: string;
-    userId?: string;
     type: BannerType;
     title: string;
-    description: string;
+    epicPittyCap: number;
+    featured: Invocable[];
+}
+
+export interface UserBanner {
+    id?: string;
+    userId?: string;
     totalWishes: number;
     wishesToRare: number;
     wishesToEpic: number;
-    epicPittyCap: number;
-    featured: Invocable[];
+    type: BannerType;
 }
