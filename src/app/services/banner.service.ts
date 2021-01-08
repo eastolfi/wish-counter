@@ -1,40 +1,61 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, CollectionReference, DocumentChangeAction, DocumentReference } from '@angular/fire/firestore';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Banner } from '../models/banner';
+
+import { Banner, BannerType, UserBanner } from '../models/banner';
+
 import { AuthService, User } from './auth.service';
+import { BaseService } from './base.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class BannerService {
+export class BannerService extends BaseService {
     private readonly USER_BANNERS_COLLECTION = 'user-banners';
+    private readonly BANNERS_COLLECTION = 'banners';
 
     constructor(
         private readonly firestore: AngularFirestore,
+        private readonly translate: TranslateService,
         private readonly authService: AuthService,
-    ) { }
+    ) {
+        super();
+    }
 
-    public searchUserBanners(user?: User): Observable<Banner[]> {
+    public searchUserBanners(user?: User): Observable<UserBanner[]> {
         const currentUser = user || this.authService.currentUser.value;
 
+        if (!currentUser) {
+            return new Observable();
+        }
+
         return this.firestore.collection(this.USER_BANNERS_COLLECTION,
-        (ref: CollectionReference) => ref.where('userId', '==', currentUser.id))
+        (ref: CollectionReference) => ref.where('userId', '==', currentUser.id) )
             .snapshotChanges()
             .pipe(
-                map((bannerActions: DocumentChangeAction<Banner>[]) => {
-                    return bannerActions.map(({ payload }: DocumentChangeAction<Banner>) => {
-                        return {
-                            id: payload.doc.id,
-                            ...payload.doc.data()
-                        } as Banner;
-                    });
-                })
+                map((bannerActions: DocumentChangeAction<UserBanner>[]) => this.toClass(bannerActions) as UserBanner[]),
             );
     }
 
-    public saveUserBanner(banner: Banner, user?: User): Promise<void> {
+    public searchBanners(): Observable<Banner[]> {
+        return this.firestore.collection(this.BANNERS_COLLECTION, (ref: CollectionReference) => {
+            return ref.where('language', '==', this.translate.currentLang)
+        })
+            .snapshotChanges()
+            .pipe(
+                map((action: DocumentChangeAction<Banner>[]) => this.toClass(action) as Banner[]),
+                // Sorting
+                map((banners: Banner[]) => [
+                    banners.filter(b => b.type === BannerType.CHARACTER_TEMPORAL)[0],
+                    banners.filter(b => b.type === BannerType.WEAPON_TEMPORAL)[0],
+                    banners.filter(b => b.type === BannerType.CHARACTER_PERMANENT)[0],
+                ])
+            );
+    }
+
+    public saveUserBanner(banner: UserBanner, user?: User): Promise<void> {
         const currentUser = user || this.authService.currentUser.value;
 
         return new Promise((resolve, reject) => {
@@ -63,21 +84,5 @@ export class BannerService {
                     .catch(reject);
             }
         });
-
-
-        // this.firestore.collection(this.USER_BANNERS_COLLECTION,
-        // (ref: CollectionReference) => ref
-        //     .where('user-id', '==', userId)
-        //     .where('type', '==', banner.type))
-        // .snapshotChanges().subscribe((asd: DocumentChangeAction<Banner>[]) => {
-        //     asd.forEach(({ payload }: DocumentChangeAction<Banner>) => {
-        //         this.firestore.doc(`${this.USER_BANNERS_COLLECTION}/${payload.doc.id}`)
-        //         .set({
-        //             totalWishes: banner.totalWishes,
-        //             wishesToRare: banner.wishesToRare,
-        //             wishesToEpic: banner.wishesToEpic
-        //         }, { merge: true });
-        //     })
-        // })
     }
 }

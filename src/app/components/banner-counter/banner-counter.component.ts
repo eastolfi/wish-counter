@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { Banner, PittyCap } from 'src/app/models/banner';
+import { PittyCap, UserBanner } from 'src/app/models/banner';
 
 @Component({
     selector: 'wc-banner-counter',
@@ -9,7 +9,7 @@ import { Banner, PittyCap } from 'src/app/models/banner';
 })
 export class BannerCounterComponent implements OnInit {
     @Input()
-    public banner: Banner;
+    public banner: UserBanner;
 
     constructor() { }
 

@@ -1,24 +1,15 @@
 {
 	"banner": {
 		"character": {
-			"permanent": {
-				"description": "Pasión por viajar",
-				"title": "Personaje - Permanente"
-			},
-			"temporal": {
-				"description": "Susurros enigmáticos",
-				"title": "Personaje - Temporal"
-			}
+			"permanent": "Personaje - Permanente",
+			"temporal": "Personaje - Temporal"
 		},
 		"pitty": {
 			"countdown": "{{ rarity }}* como mucho en {{ countdown }} deseos",
 			"next-asured": "El siguiente deseo debería ser de {{ rarity }}*"
 		},
 		"weapon": {
-			"temporal": {
-				"description": "Encarnación divina",
-				"title": "Arma - Temporal"
-			}
+			"temporal": "Arma - Temporal"
 		},
 		"wishes": {
 			"total": "Total de deseos: {{ total }}"

@@ -1,20 +1,25 @@
 <div class="p-3">
     <mat-accordion [multi]="true">
-        <mat-expansion-panel [expanded]="banner.type === BANNER_TYPES.CHARACTER_TEMPORAL" *ngFor="let banner of banners">
+        <mat-expansion-panel
+            *ngFor="let banner of banners$ | async"
+            [expanded]="banner.type === BANNER_TYPES.CHARACTER_TEMPORAL"
+        >
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    {{ banner.title | translate }}
+                    <ng-container *ngIf="banner.type === BANNER_TYPES.CHARACTER_TEMPORAL">{{ 'banner.character.temporal' | translate }}</ng-container>
+                    <ng-container *ngIf="banner.type === BANNER_TYPES.WEAPON_TEMPORAL">{{ 'banner.weapon.temporal' | translate }}</ng-container>
+                    <ng-container *ngIf="banner.type === BANNER_TYPES.CHARACTER_PERMANENT">{{ 'banner.character.permanent' | translate }}</ng-container>
                 </mat-panel-title>
 
                 <mat-panel-description>
-                    {{ banner.description | translate }}
+                    {{ banner.title | translate }}
                 </mat-panel-description>
             </mat-expansion-panel-header>
 
             <div class="">
                 <!-- Edit wishes -->
                 <div class="mb-2">
-                    <span>{{ 'banner.wishes.total' | translate:{ total: banner.totalWishes } }}</span>
+                    <span>{{ 'banner.wishes.total' | translate:{ total: userBanners[banner.type].totalWishes } }}</span>
                     <button mat-icon-button color="warn" aria-label="{{ 'common.actions.edit' | translate }}" (click)="openWishEditDialog(banner)">
                         <mat-icon>edit</mat-icon>
                     </button>
@@ -23,30 +28,25 @@
                 <!-- Counting buttons -->
                 <div class="d-flex justify-content-around mb-3">
                     <div class="">
-                        <wc-card-button (click)="addWish(banner, RARITY.COMMON)" [disabled]="banner.wishesToRare === 1 || banner.wishesToEpic === 1">
+                        <wc-card-button (click)="addWish(userBanners[banner.type], RARITY.COMMON)" [disabled]="userBanners[banner.type].wishesToRare === 1 || userBanners[banner.type].wishesToEpic === 1">
                             {{ 'game.invocable.rarity.common' | translate }}
                         </wc-card-button>
                     </div>
                     <div class="">
-                        <wc-card-button (click)="addWish(banner, RARITY.RARE)" [disabled]="banner.wishesToEpic === 1">
+                        <wc-card-button (click)="addWish(userBanners[banner.type], RARITY.RARE)" [disabled]="userBanners[banner.type].wishesToEpic === 1">
                             {{ 'game.invocable.rarity.rare' | translate }}
                         </wc-card-button>
                     </div>
                     <div class="">
-                        <wc-card-button (click)="addWish(banner, RARITY.EPIC)">
+                        <wc-card-button (click)="addWish(userBanners[banner.type], RARITY.EPIC)">
                             {{ 'game.invocable.rarity.epic' | translate }}
                         </wc-card-button>
                     </div>
                 </div>
 
                 <!-- Counting details -->
-                <wc-banner-counter [banner]="banner"></wc-banner-counter>
+                <wc-banner-counter [banner]="userBanners[banner.type]"></wc-banner-counter>
             </div>
         </mat-expansion-panel>
     </mat-accordion>
 </div>
-
-<!-- <button (click)="test()">Test</button>
-<button (click)="login()">LogIn</button>
-<button (click)="logout()">LogOut</button>
-<button (click)="register()">Register</button> -->
