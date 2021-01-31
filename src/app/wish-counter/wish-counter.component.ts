@@ -6,12 +6,12 @@ import { filter } from 'rxjs/operators';
 import { isNotNull } from 'src/app/utils/rxjs.utils';
 import { DialogTenPullComponent } from 'src/app/wish-counter/dialogs/dialog-ten-pull/dialog-ten-pull.component';
 
-import { BottomNavService } from '../../components/bottom-nav/bottom-nav.service';
-import { WishCountEditDialogComponent, WishCountEditDialogData } from '../../components/wish-count-edit-dialog/wish-count-edit-dialog.component';
-import { BannerFactory } from '../../factories/banner.factory';
-import { Banner, BannerType, Rarity, UserBanner } from '../../models/banner';
-import { BannerService } from '../../services/banner.service';
-import { AuthService, User } from '../../services/auth.service';
+import { BottomNavService } from '../components/bottom-nav/bottom-nav.service';
+import { WishCountEditDialogComponent, WishCountEditDialogData } from './dialogs/wish-count-edit-dialog/wish-count-edit-dialog.component';
+import { BannerFactory } from '../factories/banner.factory';
+import { Banner, BannerType, Rarity, UserBanner } from '../models/banner';
+import { BannerService } from '../services/banner.service';
+import { AuthService, User } from '../services/auth.service';
 
 @Component({
     selector: 'wc-wish-counter',
