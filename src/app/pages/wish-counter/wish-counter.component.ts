@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { isNotNull } from 'src/app/utils/rxjs.utils';
+import { DialogTenPullComponent } from 'src/app/wish-counter/dialogs/dialog-ten-pull/dialog-ten-pull.component';
 
 import { BottomNavService } from '../../components/bottom-nav/bottom-nav.service';
 import { WishCountEditDialogComponent, WishCountEditDialogData } from '../../components/wish-count-edit-dialog/wish-count-edit-dialog.component';
@@ -49,6 +50,15 @@ export class WishCounterComponent implements OnInit {
         .pipe(filter(isNotNull))
         .subscribe((_user: User) => {
             this.loadUserBanners();
+        });
+    }
+
+    public makeTenPulls({ type }: Banner): void {
+        const userBanner: UserBanner = this.userBanners[type];
+
+        this.dialog.open(DialogTenPullComponent, {
+            width: '500px',
+            data: { userBanner }
         });
     }
 
@@ -98,16 +108,7 @@ export class WishCounterComponent implements OnInit {
             return;
         }
 
-        banner.totalWishes++;
-        if (rarity === Rarity.EPIC) {
-            banner.wishesToEpic = 90;
-        } else if (rarity === 4) {
-            banner.wishesToEpic--;
-            banner.wishesToRare = 10;
-        } else {
-            banner.wishesToEpic--;
-            banner.wishesToRare--;
-        }
+        this.bannerService.makeSinglePullWish(banner, rarity);
 
         this.saveBanner(banner);
     }

@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Banner, BannerType, UserBanner } from '../models/banner';
+import { Banner, BannerType, Rarity, UserBanner } from '../models/banner';
 
 import { AuthService, User } from './auth.service';
 import { BaseService } from './base.service';
@@ -84,5 +84,36 @@ export class BannerService extends BaseService {
                     .catch(reject);
             }
         });
+    }
+
+    public makeSinglePullWish(banner: UserBanner, pullRarity: Rarity): void {
+        banner.totalWishes++;
+        if (pullRarity === Rarity.EPIC) {
+            banner.wishesToEpic = 90;
+        } else if (pullRarity === Rarity.RARE) {
+            banner.wishesToEpic--;
+            banner.wishesToRare = 10;
+        } else {
+            banner.wishesToEpic--;
+            banner.wishesToRare--;
+        }
+    }
+
+    public makeTenPullWishes(banner: UserBanner, pullRarity: Rarity[]): Promise<void> {
+        return new Promise((resolve, reject) => {
+            for (let pull of pullRarity) {
+                this.makeSinglePullWish(banner, pull);
+            }
+
+            this.firestore.collection(this.USER_BANNERS_COLLECTION)
+                .doc(banner.id)
+                .set({
+                    totalWishes: banner.totalWishes,
+                    wishesToRare: banner.wishesToRare,
+                    wishesToEpic: banner.wishesToEpic
+                }, { merge: true })
+                .then(resolve)
+                .catch(reject);
+        })
     }
 }

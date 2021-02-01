@@ -1,0 +1,15 @@
+<div class="d-flex flex-wrap">
+    <ng-container *ngFor="let pull of pullListRarity; let i = index; trackBy: trackByIndex">
+        <wc-card-button (click)="increaseRarity(i)">
+            {{ pull }}*
+        </wc-card-button>
+    </ng-container>
+
+    <button
+        mat-button color="accent"
+        [mat-dialog-close]="pullListRarity"
+        (click)="makeWishes()" >
+
+        {{ 'common.actions.acept' | translate }}
+    </button>
+</div>
