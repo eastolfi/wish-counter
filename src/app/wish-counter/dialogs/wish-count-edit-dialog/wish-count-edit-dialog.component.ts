@@ -7,7 +7,7 @@ export interface WishCountEditDialogData {
     totalWishes: number;
     wishesToRare: number;
     wishesToEpic: number;
-    pittyCap: number;
+    pityCap: number;
 }
 
 @Component({

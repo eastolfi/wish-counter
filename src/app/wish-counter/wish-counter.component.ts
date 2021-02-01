@@ -62,7 +62,7 @@ export class WishCounterComponent implements OnInit {
         });
     }
 
-    public openWishEditDialog({ epicPittyCap, type }: Banner): void {
+    public openWishEditDialog({ epicPityCap, type }: Banner): void {
         const userBanner: UserBanner = this.userBanners[type];
 
         const dialogRef = this.dialog.open(WishCountEditDialogComponent, {
@@ -71,7 +71,7 @@ export class WishCounterComponent implements OnInit {
                 totalWishes: userBanner.totalWishes,
                 wishesToRare: userBanner.wishesToRare,
                 wishesToEpic: userBanner.wishesToEpic,
-                pittyCap: epicPittyCap
+                pityCap: epicPityCap
             } as WishCountEditDialogData
         });
 
