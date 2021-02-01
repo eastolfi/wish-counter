@@ -6,6 +6,12 @@
     "display": "standalone",
     "scope": "./",
     "start_url": "./",
+    "shortcuts": [
+        {
+            "name": "Wish Counter",
+            "url": "/wish-counter"
+        }
+    ],
     "icons": [
         {
             "src": "assets/icons/icon-36x36.png",
