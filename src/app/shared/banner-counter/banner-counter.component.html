@@ -1,19 +1,25 @@
 <div *ngIf="banner">
     <!-- 4* -->
     <p *ngIf="banner.wishesToRare > 1">
-        {{ 'banner.pitty.countdown' | translate:{ rarity: 4, countdown: banner.wishesToRare } }}
+        {{ 'banner.pity.epic-countdown' | translate:{ rarity: 4, countdown: banner.wishesToRare } }}
     </p>
     <p *ngIf="banner.wishesToRare === 1">
-        {{ 'banner.pitty.next-asured' | translate:{ rarity: 4 } }}
+        {{ 'banner.pity.next-asured' | translate:{ rarity: 4 } }}
     </p>
     <mat-progress-bar class="mt-1 mb-3" mode="determinate" [value]="progressRare"></mat-progress-bar>
 
     <!-- 5* -->
     <p *ngIf="banner.wishesToEpic > 1">
-        {{ 'banner.pitty.countdown' | translate:{ rarity: 5, countdown: banner.wishesToEpic } }}
+        <span class="mr-1">
+            {{ 'banner.pity.legendary-countdown' | translate:{ rarity: 5, countdown: banner.wishesToEpic, totalSinceLastPity: wishesSinceLastPity } }}
+        </span>
+
+        <span *ngIf="totalToSoftPityLegendary > 1"><em>{{ 'banner.soft-pity.countdown' | translate:{ countdown: totalToSoftPityLegendary } }}</em></span>
+        <span *ngIf="totalToSoftPityLegendary <= 0"><em>{{ 'banner.soft-pity.available' | translate }}</em></span>
     </p>
     <p *ngIf="banner.wishesToEpic === 1">
-        {{ 'banner.pitty.next-asured' | translate:{ rarity: 5 } }}
+        {{ 'banner.pity.next-asured' | translate:{ rarity: 5 } }}
     </p>
+
     <mat-progress-bar class="mt-1" mode="determinate" [value]="progressEpic" color="warn"></mat-progress-bar>
 </div>

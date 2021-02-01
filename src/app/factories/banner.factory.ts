@@ -1,4 +1,4 @@
-import { BannerType, PittyCap, UserBanner } from '../models/banner';
+import { BannerType, PityCap, UserBanner } from '../models/banner';
 
 export class BannerFactory {
     public static createBanner(type: BannerType): UserBanner {
@@ -13,8 +13,8 @@ export class BannerFactory {
         return {
             type,
             totalWishes: 0,
-            wishesToRare: PittyCap.RARE,
-            wishesToEpic: PittyCap.EPIC_CHARACTER,
+            wishesToRare: PityCap.RARE,
+            wishesToEpic: PityCap.EPIC_CHARACTER,
         } as UserBanner;
     }
 
@@ -22,8 +22,8 @@ export class BannerFactory {
         return {
             type: BannerType.WEAPON_TEMPORAL,
             totalWishes: 0,
-            wishesToRare: PittyCap.RARE,
-            wishesToEpic: PittyCap.EPIC_WEAPON,
+            wishesToRare: PityCap.RARE,
+            wishesToEpic: PityCap.EPIC_WEAPON,
         } as UserBanner;
     }
 }

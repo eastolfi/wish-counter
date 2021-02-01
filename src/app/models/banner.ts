@@ -4,8 +4,11 @@ export enum Rarity {
     EPIC = 5, RARE = 4, COMMON = 3
 }
 
-export enum PittyCap {
+export enum PityCap {
     RARE = 10, EPIC_CHARACTER = 90, EPIC_WEAPON = 80
+}
+export enum SoftPityCap {
+    LEGENDARY_CHARACTER = 75, LEGENDARY_WEAPON = 65
 }
 
 export enum BannerType {
@@ -18,7 +21,7 @@ export interface Banner {
     id?: string;
     type: BannerType;
     title: string;
-    epicPittyCap: number;
+    epicPityCap: number;
     featured: Invocable[];
 }
 

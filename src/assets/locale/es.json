@@ -4,9 +4,14 @@
 			"permanent": "Personaje - Permanente",
 			"temporal": "Personaje - Temporal"
 		},
-		"pitty": {
-			"countdown": "{{ rarity }}* como mucho en {{ countdown }} deseos",
+		"pity": {
+			"epic-countdown": "Siguiente {{ rarity }}* como mucho en {{ countdown }} deseos",
+			"legendary-countdown": "{{ totalSinceLastPity }} deseos sin {{ rarity }}*. Siguiente {{ rarity }}* como mucho en {{ countdown }} deseos",
 			"next-asured": "El siguiente deseo debería ser de {{ rarity }}*"
+		},
+		"soft-pity": {
+			"available": "Soft Pity disponible",
+			"countdown": "Soft Pity en {{ countdown }} deseos"
 		},
 		"weapon": {
 			"temporal": "Arma - Temporal"
