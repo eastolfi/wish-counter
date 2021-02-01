@@ -12,6 +12,7 @@
 			"temporal": "Weapon - Temporal"
 		},
 		"wishes": {
+			"ten-pull": "10 pulls",
 			"total": "Total wishes: {{ total }}"
 		}
 	},
