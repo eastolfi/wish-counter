@@ -122,10 +122,9 @@ function commitAndPush(newVersion) {
             // tests
             await Promify(exec, [`git add .`], handleError);
             await Promify(exec, [`git commit -m "chore(release): release new version ${newVersion}"`], handleError);
-            await Promify(exec, [`git push -u origin ${releaseBranch}`], handleError);
             await Promify(exec, [`git checkout ${currentBranch}`], handleError);
             await Promify(exec, [`git merge --ff-only ${releaseBranch}`], handleError);
-            await Promify(exec, [`git push -u origin ${releaseBranch}`], handleError);
+            await Promify(exec, [`git push -u origin ${currentBranch}`], handleError);
             await Promify(exec, [`git tag ${newVersion}`], handleError);
             await Promify(exec, [`git push --tags`], handleError);
 
