@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Banner, BannerType, Rarity, UserBanner } from '../models/banner';
+import { Banner, BannerType, getPity, Rarity, UserBanner } from '../models/banner';
 
 import { AuthService, User } from './auth.service';
 import { BaseService } from './base.service';
@@ -89,7 +89,7 @@ export class BannerService extends BaseService {
     public makeSinglePullWish(banner: UserBanner, pullRarity: Rarity): void {
         banner.totalWishes++;
         if (pullRarity === Rarity.EPIC) {
-            banner.wishesToEpic = 90;
+            banner.wishesToEpic = getPity(banner.type);
         } else if (pullRarity === Rarity.RARE) {
             banner.wishesToEpic--;
             banner.wishesToRare = 10;

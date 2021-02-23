@@ -33,3 +33,11 @@ export interface UserBanner {
     wishesToEpic: number;
     type: BannerType;
 }
+
+export function getPity(type: BannerType, softPity: boolean = false): number {
+    if (softPity) {
+        return type === BannerType.WEAPON_TEMPORAL ? SoftPityCap.LEGENDARY_WEAPON : SoftPityCap.LEGENDARY_CHARACTER;
+    } else {
+        return type === BannerType.WEAPON_TEMPORAL ? PityCap.EPIC_WEAPON : PityCap.EPIC_CHARACTER;
+    }
+}

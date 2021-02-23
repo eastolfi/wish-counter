@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { BannerType, PityCap, SoftPityCap, UserBanner } from 'src/app/models/banner';
+import { BannerType, getPity, PityCap, SoftPityCap, UserBanner } from 'src/app/models/banner';
 
 @Component({
     selector: 'wc-banner-counter',
@@ -16,25 +16,25 @@ export class BannerCounterComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    public get progressRare(): number {
+    public get progressEpic(): number {
         return (PityCap.RARE - this.banner.wishesToRare) * 100 / (PityCap.RARE - 1);
     }
 
-    public get progressEpic(): number {
-        const pity = this.banner.type === BannerType.WEAPON_TEMPORAL ? PityCap.EPIC_WEAPON : PityCap.EPIC_CHARACTER;
+    public get progressLegendary(): number {
+        const pity = getPity(this.banner.type);
 
         return (pity - this.banner.wishesToEpic) * 100 / (pity - 1);
     }
 
     public get wishesSinceLastPity(): number {
-        const pity = this.banner.type === BannerType.WEAPON_TEMPORAL ? PityCap.EPIC_WEAPON : PityCap.EPIC_CHARACTER;
+        const pity = getPity(this.banner.type);
 
         return pity - this.banner.wishesToEpic;
     }
 
     public get totalToSoftPityLegendary(): number {
-        const pity = this.banner.type === BannerType.WEAPON_TEMPORAL ? PityCap.EPIC_WEAPON : PityCap.EPIC_CHARACTER;
-        const softPity = this.banner.type === BannerType.WEAPON_TEMPORAL ? SoftPityCap.LEGENDARY_WEAPON : SoftPityCap.LEGENDARY_CHARACTER;
+        const pity = getPity(this.banner.type);
+        const softPity = getPity(this.banner.type, true);
 
         return this.banner.wishesToEpic - (pity - softPity);
     }

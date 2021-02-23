@@ -6,7 +6,7 @@
     <p *ngIf="banner.wishesToRare === 1">
         {{ 'banner.pity.next-asured' | translate:{ rarity: 4 } }}
     </p>
-    <mat-progress-bar class="mt-1 mb-3" mode="determinate" [value]="progressRare"></mat-progress-bar>
+    <mat-progress-bar class="mt-1 mb-3" mode="determinate" [value]="progressEpic"></mat-progress-bar>
 
     <!-- 5* -->
     <p *ngIf="banner.wishesToEpic > 1">
@@ -21,5 +21,5 @@
         {{ 'banner.pity.next-asured' | translate:{ rarity: 5 } }}
     </p>
 
-    <mat-progress-bar class="mt-1" mode="determinate" [value]="progressEpic" color="warn"></mat-progress-bar>
+    <mat-progress-bar class="mt-1" mode="determinate" [value]="progressLegendary" color="warn"></mat-progress-bar>
 </div>
