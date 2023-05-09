@@ -88,7 +88,7 @@ export class BannerService extends BaseService {
         const currentUser = user || this.authService.currentUser.value;
 
         if (!banner.game) {
-            // banner.game = BannerGame.GENSHIN;
+            banner.game = this.gameService.getCurrentGame();
         }
 
         return new Promise((resolve, reject) => {
