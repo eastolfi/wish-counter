@@ -8,12 +8,12 @@ export class GameSwitchService {
     constructor() {}
 
     public changeGame(to: BannerGame): void {
-        localStorage.setItem(this.STORAGE_KEY_CURRENT_GAME, JSON.stringify(to));
+        localStorage.setItem(this.STORAGE_KEY_CURRENT_GAME, to.toString());
     }
 
     public getCurrentGame(): BannerGame {
         const game = localStorage.getItem(this.STORAGE_KEY_CURRENT_GAME);
 
-        return JSON.parse(game || BannerGame.GENSHIN);
+        return game as BannerGame || BannerGame.GENSHIN;
     }
 }
