@@ -5,7 +5,7 @@
 export const environment = {
    production: true,
    firebase: {
-        apiKey: '',
+        apiKey: 'AIzaSyDo1duVRY3RSfuWw17Ofhp8yq2GlQ5BzDQ',
         projectId: 'wish-counter-985b1',
         authDomain: 'wish-counter-985b1.firebaseapp.com',
         databaseURL: 'https://wish-counter-985b1.firebaseio.com',
