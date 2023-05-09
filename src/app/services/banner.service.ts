@@ -45,7 +45,7 @@ export class BannerService extends BaseService {
             .pipe(
                 map((bannerActions: DocumentChangeAction<UserBanner>[]) => this.toClass(bannerActions) as UserBanner[]),
                 tap(banners => this.addGameInfoToBanners(banners, this.USER_BANNERS_COLLECTION)),
-                map(banners => banners.filter(banner => banner.game === this.gameService.getCurrentGame()))
+                map(banners => banners.filter(banner => banner.game === this.gameService.getCurrentGame())),
             );
     }
 
@@ -62,7 +62,7 @@ export class BannerService extends BaseService {
             .snapshotChanges()
             .pipe(
                 map((action: DocumentChangeAction<Banner>[]) => this.toClass(action) as Banner[]),
-                // Sorting
+                // Sorting the banners by in-game presentation
                 map((banners: Banner[]) => [
                     banners.filter(b => b.type === BannerType.CHARACTER_TEMPORAL && b.game === currentGame)[0],
                     banners.filter(b => b.type === BannerType.WEAPON_TEMPORAL && b.game === currentGame)[0],
