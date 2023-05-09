@@ -44,13 +44,7 @@ export class WishCounterComponent implements OnInit {
             {icon: 'wc-wish', svgIcon: true, label: 'Wish Counter', routerLink: 'wish-counter'},
         ]);
 
-        this.loadBanners();
-
-        this.authService.currentUser
-        .pipe(filter(isNotNull))
-        .subscribe((_user: User) => {
-            this.loadUserBanners();
-        });
+        this.loadAllBanners();
     }
 
     public makeTenPulls({ type }: Banner): void {
@@ -113,8 +107,22 @@ export class WishCounterComponent implements OnInit {
         this.saveBanner(banner);
     }
 
+    public onGameChanged(): void {
+        this.loadAllBanners();
+    }
+
     private saveBanner(banner: UserBanner): void {
         this.bannerService.saveUserBanner(banner);
+    }
+
+    private loadAllBanners(): void {
+        this.loadBanners();
+
+        this.authService.currentUser
+        .pipe(filter(isNotNull))
+        .subscribe((_user: User) => {
+            this.loadUserBanners();
+        });
     }
 
     private loadBanners(): void {
@@ -123,8 +131,6 @@ export class WishCounterComponent implements OnInit {
 
     private loadUserBanners(): void {
         this.bannerService.searchUserBanners()
-        .subscribe((banners: UserBanner[]) => {
-            banners.forEach((banner: UserBanner) => this.userBanners[banner.type] = banner)
-        });
+        .subscribe((banners: UserBanner[]) => banners.forEach((banner: UserBanner) => this.userBanners[banner.type] = banner));
     }
 }

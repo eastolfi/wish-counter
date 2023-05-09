@@ -127,6 +127,7 @@ function commitAndPush(newVersion) {
             await Promify(exec, [`git push -u origin ${currentBranch}`], handleError);
             await Promify(exec, [`git tag ${newVersion}`], handleError);
             await Promify(exec, [`git push --tags`], handleError);
+            await Promify(exec, [`git branch -d ${releaseBranch}`], handleError);
 
             resolve();
         } catch (error) {

@@ -7,6 +7,7 @@ import { CoreModule } from '../modules/core/core.module';
 import { DialogTenPullComponent } from './dialogs/dialog-ten-pull/dialog-ten-pull.component';
 import { WishCounterComponent } from './wish-counter.component';
 import { WishCountEditDialogComponent } from './dialogs/wish-count-edit-dialog/wish-count-edit-dialog.component';
+import { GameSwitchModule } from '../components/game-switch/game-switch.module';
 
 @NgModule({
     declarations: [
@@ -18,9 +19,10 @@ import { WishCountEditDialogComponent } from './dialogs/wish-count-edit-dialog/w
         CommonModule,
         CoreModule,
         SharedModule,
+        GameSwitchModule,
     ],
     exports: [
         WishCounterComponent,
-    ]
+    ],
 })
 export class WishCounterModule { }

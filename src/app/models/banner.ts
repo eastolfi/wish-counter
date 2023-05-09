@@ -17,12 +17,18 @@ export enum BannerType {
     CHARACTER_PERMANENT = 'CHARACTER_PERM'
 }
 
+export enum BannerGame {
+    GENSHIN = 'genshin',
+    HONKAI_STAR_RAIL = 'star_rail',
+}
+
 export interface Banner {
     id?: string;
     type: BannerType;
     title: string;
     epicPityCap: number;
     featured: Invocable[];
+    game?: BannerGame;
 }
 
 export interface UserBanner {
@@ -32,6 +38,7 @@ export interface UserBanner {
     wishesToRare: number;
     wishesToEpic: number;
     type: BannerType;
+    game?: BannerGame;
 }
 
 export function getPity(type: BannerType, softPity: boolean = false): number {

@@ -89,9 +89,9 @@
 			}
 		},
 		"wishes": {
-			"common": "Deseos de 3*",
-			"epic": "Deseos de 5*",
-			"rare": "Deseos de 4*"
+			"common": "Deseos totales",
+			"epic": "Deseos hasta 5*",
+			"rare": "Deseos hasta 4*"
 		}
 	},
 	"item": {

@@ -20,6 +20,7 @@ import { BottomNavModule } from './components/bottom-nav/bottom-nav.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { GameSwitchModule } from './components/game-switch/game-switch.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/locale/', '.json');
@@ -55,6 +56,7 @@ const DEFAULT_LANGUAGE = 'en';
         ReactiveFormsModule,
         FlexLayoutModule,
         BottomNavModule,
+        GameSwitchModule,
         ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
         TranslateModule.forRoot({
             defaultLanguage: DEFAULT_LANGUAGE,

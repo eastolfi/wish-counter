@@ -1,4 +1,6 @@
 <div class="p-3">
+    <wc-game-switch (gameChanged)="onGameChanged()"></wc-game-switch>
+
     <mat-accordion [multi]="true">
         <mat-expansion-panel
             *ngFor="let banner of banners$ | async"
